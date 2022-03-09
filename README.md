@@ -28,10 +28,10 @@
 
 **状态变量（state）**：
 
-- $x$：小车在轨道上的位置*（position of the cart on the track）*
-- $\theta$：杆子与竖直方向的夹角*（angle of the pole with the vertical）*
-- $\dot{x} $：小车速度*（cart velocity）*
-- $\dot{\theta}$：角度变化率*（rate of change of the angle）*
+- ![img](http://latex.codecogs.com/svg.latex? x)：小车在轨道上的位置
+- ![img](http://latex.codecogs.com/svg.latex? \theta)：杆子与竖直方向的夹角
+- ![img](http://latex.codecogs.com/svg.latex? \dot{x})：小车速度
+- ![img](http://latex.codecogs.com/svg.latex? \dot{\theta})：角度变化率
 
 **动作（action）**：
 
