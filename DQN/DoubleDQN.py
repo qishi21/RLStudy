@@ -188,7 +188,7 @@ def eval(cfg, env, agent):
                 break
             state = next_state
         print(f'episode:{ep+1}/{cfg.eval_eps}, reward:{ep_reward}')
-    print('Complete evalution.')
+    print('Complete evaluation.')
 
 
 if __name__ == '__main__':
