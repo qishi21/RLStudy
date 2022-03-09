@@ -1,7 +1,5 @@
 # RLStudy
 
-
-
 ## Algorithm
 
 | Algorithm                      | Environment    | Code                                                        |
@@ -18,8 +16,6 @@
 | 策略迭代                       | SmallGridworld | [PolicyIteration.py](DynamicProgramming/PolicyIteration.py) |
 | 价值迭代                       | SmallGridworld | [ValueIteration.py](DynamicProgramming/ValueIteration.py)   |
 
-
-
 ## Environment
 
 ### CartPole
@@ -28,10 +24,10 @@
 
 **状态变量（state）**：
 
-- ![img](http://latex.codecogs.com/svg.latex? x)：小车在轨道上的位置
-- ![img](http://latex.codecogs.com/svg.latex? \theta)：杆子与竖直方向的夹角
-- ![img](http://latex.codecogs.com/svg.latex? \dot{x})：小车速度
-- ![img](http://latex.codecogs.com/svg.latex? \dot{\theta})：角度变化率
+- ![img](http://latex.codecogs.com/svg.latex?x)：小车在轨道上的位置
+- ![img](http://latex.codecogs.com/svg.latex?\theta)：杆子与竖直方向的夹角
+- ![img](http://latex.codecogs.com/svg.latex?\dot{x})：小车速度
+- ![img](http://latex.codecogs.com/svg.latex?\dot{\theta})：角度变化率
 
 **动作（action）**：
 
