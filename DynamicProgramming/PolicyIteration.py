@@ -1,40 +1,26 @@
-# Policy Iteration
+# Algorithm: Policy Iteration
 # 根据 Bellman Expectation Equation 迭代
-
-# environment:
+# Environment: SmallGridworld
 #  X    1   2   3
 #  4    5   6   7
 #  8    9   10  11
 #  12   13  14  X
 # 每走一步 reward = -1
+# 初始状态为1-14中任意一处
 # X 为终点
 
 import numpy as np
+from common import generate_next_state, generate_best_policy
 
 
-# 根据当前的状态和动作生成下一个状态
-def generate_next_state(state, action):
-    if state not in np.arange(1, 15) or action not in np.arange(4):
-        raise NameError('state or action 输入错误.')
-    if state > 3 and action == 0:
-        return state - 4
-    elif state not in np.arange(3, 16, 4) and action == 1:
-        return state + 1
-    elif state < 12 and action == 2:
-        return state + 4
-    elif state not in np.arange(0, 16, 4) and action == 3:
-        return state - 1
-    else:
-        return state
-
-
+ # 策略
 class Policy:
     def __init__(self):
-        self.v = np.zeros(16)
-        self.q = np.zeros((16, 4))
-        self.gamma = 1
+        self.v = np.zeros(16) # state value function
+        self.q = np.zeros((16, 4)) # state-action value function
+        self.gamma = 1 # 折扣系数
 
-        self.pi = dict()
+        self.pi = dict() # 策略
         for i in range(1, 15):
             self.pi[i] = [0,1,2,3]
 
@@ -44,7 +30,7 @@ class Policy:
         while True:
             v_next = np.zeros(16)
             for state in range(1, 15):
-                prob = 1 / len(self.pi[state])
+                prob = 1 / len(self.pi[state]) # π(a|s)
                 for action in self.pi[state]:
                     v_next[state] += prob * (-1 + self.gamma*self.v[generate_next_state(state, action)])
             if np.all(v_next == self.v):
@@ -65,30 +51,18 @@ class Policy:
 
 if __name__ == '__main__':
     agent = Policy()
-    count = 0
 
+    # 训练
     while True:
-        pi_pre = agent.pi.copy()
+        pi_pre = agent.pi.copy() # 每轮迭代前的策略
+
+        # 策略迭代
         agent.evaluate()
         agent.improve()
 
-        count += 1
-
+        # 若迭代前和迭代后的策略相同，则停止迭代
         if np.all(pi_pre == agent.pi):
             break
 
-    best_action = [np.inf] * 16
-    for state in range(1, 15):
-        best_action[state] = agent.pi[state]
-
-    print('最优策略：')
-    print(best_action[0:4])
-    print(best_action[4:8])
-    print(best_action[8:12])
-    print(best_action[12:16])
-    print('-'*30)
-    print('状态价值：')
-    agent.v = agent.v.reshape((4, 4))
-    print(agent.v)
-    print('-'*30)
-    print('策略提升次数：', count-1)
+    # 输出最优策略
+    generate_best_policy(agent)

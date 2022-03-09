@@ -1,4 +1,5 @@
-# Prioritized Replay DQN (基于DDQN)
+# Algorithm: Prioritized Replay DQN (基于DDQN)
+# Environment: CartPole
 
 import torch
 import torch.nn as nn
@@ -223,6 +224,7 @@ def train(cfg, env, agent):
         agent.update_target_params()
         if (ep+1) % 10 == 0:
             print(f'ep:{ep+1}/{cfg.train_eps}, reward:{ep_reward}')
+    print('Complete training.')
 
 
 # 评估
@@ -238,7 +240,7 @@ def eval(cfg, env, agent):
                 break
             state = next_state
         print(f'ep:{ep+1}/{cfg.eval_eps}, reward:{ep_reward}')
-
+    print('Complete evalution.')
 
 if __name__ == '__main__':
     cfg = PRDQNConfig()

@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class SmallGridworld:
     def __init__(self):
         self.state_dim = 16
@@ -15,6 +16,9 @@ class SmallGridworld:
     def step(self, action):
         if not self.reset_state:
             raise NameError('未进行初始化')
+
+        if action not in range(4):
+            raise NameError('动作错误')
 
         x = self.state // 4
         y = self.state % 4

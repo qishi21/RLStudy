@@ -1,6 +1,5 @@
-# EasyRL - 第一章 - Major Components of an RL Agent - Model
-
 import numpy as np
+
 
 class Maze:
     def __init__(self):
@@ -32,7 +31,10 @@ class Maze:
 
     def step(self, action):
         if not self.reset_state:
-            raise NameError('未进行初始化。')
+            raise NameError('未进行初始化')
+
+        if action not in range(4):
+            raise NameError('动作错误')
 
         if action == 0 and self.state > 7:
             self.state -= 8

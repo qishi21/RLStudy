@@ -1,3 +1,6 @@
+# Algorithm: DoubleDQN
+# Environment: CartPole
+
 import random
 import math
 import torch
@@ -90,7 +93,7 @@ class DDQNAgent:
         epsilon = self.epsilon(self.frame_idx)
 
         with torch.no_grad():
-            state = torch.tensor([state], dtype=torch.float, device=self.device)
+            state = torch.tensor(np.array([state]), dtype=torch.float, device=self.device)
             q_values = self.policy_net(state)
             best_action = q_values.max(1)[1].item()
             action_prob = np.ones(self.action_dim) * epsilon / self.action_dim
@@ -102,7 +105,7 @@ class DDQNAgent:
     # 根据greedy选择动作
     def predict(self, state):
         with torch.no_grad():
-            state = torch.tensor([state], dtype=torch.float, device=self.device)
+            state = torch.tensor(np.array([state]), dtype=torch.float, device=self.device)
             q_values = self.policy_net(state)
             return q_values.max(1)[1].item()
 
@@ -114,10 +117,10 @@ class DDQNAgent:
         # 从经验池中采样
         states, actions, rewards, next_states, dones = self.memory.sample(self.batch_size)
         # 转换成 torch 格式
-        state_batch = torch.tensor(states, dtype=torch.float, device=self.device)
+        state_batch = torch.tensor(np.array(states), dtype=torch.float, device=self.device)
         action_batch = torch.tensor(actions, dtype=torch.int64, device=self.device).unsqueeze(1)
         reward_batch = torch.tensor(rewards, dtype=torch.float, device=self.device)
-        next_state_batch = torch.tensor(next_states, dtype=torch.float, device=self.device)
+        next_state_batch = torch.tensor(np.array(next_states), dtype=torch.float, device=self.device)
         done_batch = torch.tensor(np.float32(dones), dtype=torch.float, device=self.device)
 
         # 采用策略网络计算当前状态的Q值, Q(s_t, a_t)

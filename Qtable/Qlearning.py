@@ -1,8 +1,8 @@
 # Algorithm: Q-learning
-# Environment: EasyRL - 第一章 - Major Components of an RL Agent - Model
+# Environment: Maze
 
 import numpy as np
-from exercise.envs.Maze import Maze
+from envs.Maze import Maze # 环境
 
 
 class Agent:
@@ -34,12 +34,12 @@ class Agent:
 
 if __name__ == '__main__':
     env = Maze()
-    state_dim = env.state_dim
-    action_dim = env.action_dim
-    train_eps = 2000
+    state_dim = env.state_dim # 环境维度
+    action_dim = env.action_dim # 动作维度
+    train_eps = 2000 # 训练轮次
     agent = Agent(state_dim, action_dim)
 
-    # train
+    # 训练
     for ep in range(train_eps):
         state = env.reset()
         while True:
@@ -51,10 +51,10 @@ if __name__ == '__main__':
             state = next_state
 
     # 输出最优策略
-    print('algo: Qlearning')
+    print('algo: Q-learning')
     rewards = 0
     state = env.reset()
-    print('Best policy:', end='\t')
+    print('\nBest action:\t(0:↑ 1:→ 2:↓ 3:←)')
     while True:
         action = agent.predict(state)
         if action == 0:

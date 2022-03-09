@@ -1,7 +1,9 @@
-# Sarsa
+# Algorithm: Sarsa
+# Environment: Maze
 
 import numpy as np
-from exercise.envs.Maze import Maze
+from envs.Maze import Maze # 环境
+
 
 class Agent:
     def __init__(self, state_dim, action_dim, eps):
@@ -53,7 +55,7 @@ if __name__ == '__main__':
     print('algo: Sarsa')
     rewards = 0
     state = env.reset()
-    print('Best policy:', end='\t')
+    print('\nBest action:\t(0:↑ 1:→ 2:↓ 3:←)')
     while True:
         action = agent.predict(state)
         if action == 0:
