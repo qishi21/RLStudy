@@ -22,12 +22,12 @@
 
 <img src="https://github.com/qishi21/RLStudy/blob/main/.images/image-20220309121426010.png?raw=true" alt="image-20220309121426010" style="zoom:50%;" />
 
-**状态变量（state）**：
+**状态（state）**：
 
-- ![img](http://latex.codecogs.com/svg.latex?x)：小车在轨道上的位置
-- ![img](http://latex.codecogs.com/svg.latex?\theta)：杆子与竖直方向的夹角
-- ![img](http://latex.codecogs.com/svg.latex?\dot{x})：小车速度
-- ![img](http://latex.codecogs.com/svg.latex?\dot{\theta})：角度变化率
+- 小车在轨道上的位置
+- 杆子与竖直方向的夹角
+- 小车速度
+- 角度变化率
 
 **动作（action）**：
 
