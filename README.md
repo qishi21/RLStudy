@@ -24,7 +24,7 @@
 
 ### CartPole
 
-<img src="/Users/shiqi/Documents/Projects/RLStudy/.images/image-20220309121426010.png" alt="image-20220309121426010" style="zoom:50%;" />
+<img src="https://github.com/qishi21/RLStudy/blob/main/.images/image-20220309121426010.png?raw=true" alt="image-20220309121426010" style="zoom:50%;" />
 
 **状态变量（state）**：
 
@@ -46,7 +46,7 @@
 
 ### Maze
 
-<img src="/Users/shiqi/Documents/Projects/RLStudy/.images//image-20220309121917373.png" alt="image-20220309121917373" style="zoom:50%;" />
+<img src="https://github.com/qishi21/RLStudy/blob/main/.images/image-20220309121917373.png?raw=true" alt="image-20220309121917373" style="zoom:50%;" />
 
 - agent 从起点开始，然后到达终点位置。
 - 每走一步，得到 -1 的奖励。
@@ -57,7 +57,7 @@
 
 ### SmallGridworld
 
-<img src="/Users/shiqi/Documents/Projects/RLStudy/.images//image-20220309122152339.png" alt="image-20220309122152339" style="zoom:50%;" />
+<img src="https://github.com/qishi21/RLStudy/blob/main/.images/image-20220309122152339.png?raw=true" alt="image-20220309122152339" style="zoom:50%;" />
 
 - 起点位置为状态1-14中的任意一个。
 - agent 从起点开始，然后到达左上角和右下角的灰色区域。
