@@ -11,16 +11,15 @@ class Agent:
         self.action_dim = action_dim
         self.q_table = np.zeros((state_dim, action_dim))
         self.epsilon = 0.95
-        self.lr = 0.02
+        self.lr = 0.01
         self.gamma = 1
 
     # 根据epsilon-greedy选择动作
     def choose_action(self, state):
         if np.random.random() < self.epsilon:
-            action = np.random.randint(self.action_dim)
+            return np.random.randint(self.action_dim)
         else:
-            action = np.argmax(self.q_table[state])
-        return action
+            return np.argmax(self.q_table[state])
 
     # 根据greedy选择动作
     def predict(self, state):
@@ -33,9 +32,10 @@ class Agent:
         # Q(s_t, a_t) = Q(s_t, a_t) + α * (r + γ * Q(s_t_1, a_t_1) - Q(s_t, a_t))
         self.q_table[state][action] += self.lr * (reward + self.gamma*self.q_table[next_state][next_action] - self.q_table[state][action])
 
+
 if __name__ == '__main__':
     env = Maze()
-    train_eps = 200
+    train_eps = 1000
     agent = Agent(env.state_dim, env.action_dim, train_eps)
 
     # train

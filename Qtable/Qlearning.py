@@ -36,7 +36,7 @@ if __name__ == '__main__':
     env = Maze()
     state_dim = env.state_dim # 环境维度
     action_dim = env.action_dim # 动作维度
-    train_eps = 2000 # 训练轮次
+    train_eps = 1000 # 训练轮次
     agent = Agent(state_dim, action_dim)
 
     # 训练
