@@ -72,7 +72,7 @@ class PPOAgent:
                 for k in range(t, len(reward_arr) - 1):
                     # \sum^{\infty}_{l=0}(\gamma\lambda)^l(r_{t+l}+\gamma V(s_{t+l+1})-V(s_{t+l}))
                     a_t += discount * (
-                                reward_arr[k] + self.gamma * val_arr[k + 1] * (1 - int(done_arr[k])) - val_arr[k])
+                            reward_arr[k] + self.gamma * val_arr[k + 1] * (1 - int(done_arr[k])) - val_arr[k])
                     discount *= self.gamma * self.gae_lambda
                 advantage[t] = a_t
             advantage = torch.tensor(advantage).to(self.device)

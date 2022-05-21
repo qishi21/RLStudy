@@ -13,15 +13,15 @@ from torch.distributions import Categorical
 # 参数配置
 class PGConfig:
     def __init__(self):
-        self.train_eps = 400 # 训练批次
-        self.eval_eps = 30 # 评估批次
-        self.env = 'CartPole-v0' # 环境
-        self.algo = 'REINFORCE' # 算法
-        self.hidden_dim = 128 # 策略网络中隐藏层的神经单元数量
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu' # 设备选择
-        self.lr = 0.001 # 优化器的学习率
-        self.gamma = 1 # 回报的折扣系数
-        self.update_fre = 8 # 更新频率
+        self.train_eps = 1000  # 训练批次
+        self.eval_eps = 30  # 评估批次
+        self.env = 'CartPole-v0'  # 环境
+        self.algo = 'REINFORCE'  # 算法
+        self.hidden_dim = 128  # 策略网络中隐藏层的神经单元数量
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'  # 设备选择
+        self.lr = 0.001  # 优化器的学习率
+        self.gamma = 1  # 回报的折扣系数
+        self.update_freq = 8  # 更新频率
 
 
 # 策略网络
@@ -55,11 +55,11 @@ class MLP(nn.Module):
 # agent
 class REINFORCEAgent:
     def __init__(self, cfg, state_dim, action_dim):
-        self.policy_net = MLP(state_dim, action_dim, cfg.hidden_dim) # 策略网络
-        self.optimizer = optim.RMSprop(self.policy_net.parameters(), lr=cfg.lr) # 优化器
+        self.policy_net = MLP(state_dim, action_dim, cfg.hidden_dim)  # 策略网络
+        self.optimizer = optim.RMSprop(self.policy_net.parameters(), lr=cfg.lr)  # 优化器
         self.gamma = cfg.gamma
         self.device = cfg.device
-        self.memory = PGMemory() # 轨迹存储
+        self.memory = PGMemory()  # 轨迹存储
 
     # 根据概率随机抽取动作
     def choose_action(self, state):
@@ -93,7 +93,7 @@ class REINFORCEAgent:
         returns = torch.tensor(returns, dtype=torch.float).unsqueeze(1).to(self.device)
 
         # 将回报标准化
-        returns = (returns-returns.mean()) / (returns.std()+np.finfo(np.float64).eps)
+        returns = (returns - returns.mean()) / (returns.std() + np.finfo(np.float64).eps)
         # 计算对数概率
         probs = self.policy_net(states).gather(dim=1, index=actions)
         log_probs = -probs.log()
@@ -104,7 +104,7 @@ class REINFORCEAgent:
         loss.backward()
         self.optimizer.step()
 
-        agent.memory.clear() # agent更新后将存储的轨迹清除
+        agent.memory.clear()  # agent更新后将存储的轨迹清除
 
 
 # 轨迹存储
@@ -116,9 +116,9 @@ class PGMemory:
         self.dones = []
 
     # 存储状态，动作概率，奖励，是否完成
-    def push(self, state, prob, reward, done):
+    def push(self, state, action, reward, done):
         self.states.append(state)
-        self.actions.append(prob)
+        self.actions.append(action)
         self.rewards.append(reward)
         self.dones.append(done)
 
@@ -153,12 +153,12 @@ def train(cfg, env, agent):
             if done:
                 break
             state = next_state
-        if ep % cfg.update_fre == 0:
+        if ep % cfg.update_freq == 0:
             agent.update()
         if (ep + 1) % 10 == 0:
             print(f'ep:{ep + 1}, reward:{ep_reward}')
     print('Complete training.')
-    print('-'*20)
+    print('-' * 20)
 
 
 # 评估

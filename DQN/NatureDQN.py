@@ -13,19 +13,19 @@ import gym
 # 参数配置
 class DQNConfig:
     def __init__(self):
-        self.env = 'CartPole-v0' # 环境
-        self.hidden_dim = 256 # 策略网络中每层隐藏层的神经单元数量
-        self.capacity = 100000 # 经验回放池的大小
-        self.epsilon_end = 0 # epsilon-greedy 的终值
-        self.epsilon_start = 0.95 # epsilon-greedy 的初始值
-        self.epsilon_decay = 500 # epsilon-greedy 的衰减率
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu' # 设备选择
-        self.batch_size = 64 # 每次进行参数更新的样本量大小
-        self.lr = 0.0001 # 优化器的学习率
-        self.gamma = 1 # 折扣系数
-        self.train_eps = 200 # 训练轮次
-        self.eval_eps = 30 # 评估轮次
-        self.target_update = 4 # N次之后，将策略网络的参数值复制给目标网络
+        self.env = 'CartPole-v0'  # 环境
+        self.hidden_dim = 256  # 策略网络中每层隐藏层的神经单元数量
+        self.capacity = 100000  # 经验回放池的大小
+        self.epsilon_end = 0  # epsilon-greedy 的终值
+        self.epsilon_start = 0.95  # epsilon-greedy 的初始值
+        self.epsilon_decay = 500  # epsilon-greedy 的衰减率
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'  # 设备选择
+        self.batch_size = 64  # 每次进行参数更新的样本量大小
+        self.lr = 0.0001  # 优化器的学习率
+        self.gamma = 1  # 折扣系数
+        self.train_eps = 200  # 训练轮次
+        self.eval_eps = 30  # 评估轮次
+        self.target_update = 4  # N次之后，将策略网络的参数值复制给目标网络
 
 
 # 策略、目标网络
@@ -54,7 +54,7 @@ class ReplayBuffer:
         if self.position < self.capacity:
             self.buffer.append((state, action, reward, next_state, done))
         else:
-            self.buffer[self.position%self.capacity] = (state, action, reward, next_state, done)
+            self.buffer[self.position % self.capacity] = (state, action, reward, next_state, done)
         self.position += 1
 
     # 进行抽样
@@ -71,21 +71,22 @@ class ReplayBuffer:
 # agent
 class DQNAgent:
     def __init__(self, cfg, state_dim, action_dim):
-        self.action_dim = action_dim # 动作维度
+        self.action_dim = action_dim  # 动作维度
 
-        self.policy_net = MLP(state_dim, cfg.hidden_dim, action_dim) # 策略网络
-        self.target_net = MLP(state_dim, cfg.hidden_dim, action_dim) # 目标网络
-        self.target_net.load_state_dict(self.policy_net.state_dict()) # 将策略网络的参数值复制给目标网络
-        self.memory = ReplayBuffer(cfg.capacity) # experience replay
+        self.policy_net = MLP(state_dim, cfg.hidden_dim, action_dim)  # 策略网络
+        self.target_net = MLP(state_dim, cfg.hidden_dim, action_dim)  # 目标网络
+        self.target_net.load_state_dict(self.policy_net.state_dict())  # 将策略网络的参数值复制给目标网络
+        self.memory = ReplayBuffer(cfg.capacity)  # experience replay
 
         # 将 epsilon-greedy 中的 epsilon 不断减小
         self.frame_idx = 0
-        self.epsilon = lambda frame_idx: cfg.epsilon_end + (cfg.epsilon_start-cfg.epsilon_end)*math.exp(-frame_idx/cfg.epsilon_decay)
+        self.epsilon = lambda frame_idx: cfg.epsilon_end + (cfg.epsilon_start - cfg.epsilon_end) * math.exp(
+            -frame_idx / cfg.epsilon_decay)
 
         self.device = cfg.device
-        self.batch_size = cfg.batch_size # 每次参数更新权重时选择的数据量大小
-        self.gamma = cfg.gamma # 折扣系数
-        self.optimizer = torch.optim.RMSprop(self.policy_net.parameters(), lr=cfg.lr) # 优化器
+        self.batch_size = cfg.batch_size  # 每次参数更新权重时选择的数据量大小
+        self.gamma = cfg.gamma  # 折扣系数
+        self.optimizer = torch.optim.RMSprop(self.policy_net.parameters(), lr=cfg.lr)  # 优化器
 
     # 根据epsilon-greedy选择动作
     def choose_action(self, state):
@@ -128,7 +129,7 @@ class DQNAgent:
         # 采用目标网络计算下一状态最大的Q值, max(Q(s_t+1, a_t+1))
         next_q_values = self.target_net(next_state_batch).max(1)[0].detach()
         # 期望Q值: reward + gamma * max(Q_t+1) * (1-done)
-        expected_q_values = reward_batch + self.gamma*next_q_values*(1-done_batch)
+        expected_q_values = reward_batch + self.gamma * next_q_values * (1 - done_batch)
         # 计算损失
         loss = nn.MSELoss()(q_values, expected_q_values.unsqueeze(1))
 
@@ -165,11 +166,11 @@ def train(cfg, env, agent):
                 break
             state = next_state
 
-        if (ep+1) % cfg.target_update == 0:
+        if (ep + 1) % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
 
-        if (ep+1) % 10 == 0:
-            print(f'episode:{ep+1}/{cfg.train_eps}, reward:{ep_reward}')
+        if (ep + 1) % 10 == 0:
+            print(f'episode:{ep + 1}/{cfg.train_eps}, reward:{ep_reward}')
     print('Complete training.')
 
 
@@ -185,7 +186,7 @@ def eval(cfg, env, agent):
             if done:
                 break
             state = next_state
-        print(f'episode:{ep+1}/{cfg.eval_eps}, reward:{ep_reward}')
+        print(f'episode:{ep + 1}/{cfg.eval_eps}, reward:{ep_reward}')
     print('Complete evaluation.')
 
 
