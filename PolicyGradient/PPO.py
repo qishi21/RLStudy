@@ -114,9 +114,9 @@ class PPOAgent:
 class PPOMemory:
     def __init__(self, batch_size):
         self.states = []
+        self.actions = []
         self.probs = []
         self.vals = []
-        self.actions = []
         self.rewards = []
         self.dones = []
         self.batch_size = batch_size
@@ -139,14 +139,15 @@ class PPOMemory:
         self.rewards.append(reward)
         self.dones.append(done)
 
-    # 初始化
+    # 清除
     def clear(self):
         self.states = []
-        self.probs = []
         self.actions = []
+        self.probs = []
+        self.vals = []
         self.rewards = []
         self.dones = []
-        self.vals = []
+
 
 
 # actor网络
