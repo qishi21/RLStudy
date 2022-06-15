@@ -59,3 +59,6 @@
 - 每走一步，得到 -1 的奖励。
 - 可以采取的动作是往上下左右走。
 - 当前状态用现在 agent 所在的位置来描述。
+
+## Reference
+https://github.com/datawhalechina/easy-rl
