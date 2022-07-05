@@ -13,7 +13,7 @@ from torch.distributions import Categorical
 # 参数配置
 class PGConfig:
     def __init__(self):
-        self.train_eps = 1000  # 训练批次
+        self.train_eps = 200  # 训练批次
         self.eval_eps = 30  # 评估批次
         self.env = 'CartPole-v0'  # 环境
         self.algo = 'REINFORCE'  # 算法
@@ -21,7 +21,7 @@ class PGConfig:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'  # 设备选择
         self.lr = 0.001  # 优化器的学习率
         self.gamma = 1  # 回报的折扣系数
-        self.update_freq = 8  # 更新频率
+        self.update_freq = 1  # 更新频率
 
 
 # 策略网络

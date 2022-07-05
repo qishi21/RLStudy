@@ -23,7 +23,7 @@ class PPOConfig:
         self.gae_lambda = 0.95
         self.policy_clip = 0.2  # PPO clip值
         self.hidden_dim = 128  # NN中的隐藏层的神经单元数量
-        self.update_fre = 20  # 更新频率
+        self.update_fre = 100  # 更新频率
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'  # 设备
 
 
